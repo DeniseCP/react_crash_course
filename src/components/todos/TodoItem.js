@@ -18,7 +18,8 @@ export class TodoItem extends Component {
                 <p>
                     <input type='checkbox' checked={ this.props.todo.completed } onChange={ this.props.markComplete.bind(this, id) } /> { ' ' }
                     { task }
-                    <button style={ btnStyle } onClick={ this.props.todo.deleteTask.bind(this, id) }>Delete</button>
+                    {/* @ts-ignore */ }
+                    <button style={ btnStyle } onClick={ this.props.deleteTask.bind(this, id) }>Delete</button>
                 </p>
             </div>
         );
@@ -38,7 +39,5 @@ const btnStyle = {
 TodoItem.prototypes = {
     todo: PropTypes.object.isRequired,
 };
-
-
 
 export default TodoItem;

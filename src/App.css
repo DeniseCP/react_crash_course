@@ -13,3 +13,22 @@ a {
   color: #333;
   text-decoration: none;
 }
+
+.container {
+  padding: 0;
+}
+
+.btn {
+  display: inline-block;
+  border: 1px solid #0d6efd;
+  background-color: #0d6efd;
+  color: #fff;
+  padding: 0.35rem 0.75rem;
+  cursor: pointer;
+}
+
+.btn:hover {
+  border: 1px solid #0a58ca;
+  background-color: #0b5ed7;
+  color: #fff;
+}

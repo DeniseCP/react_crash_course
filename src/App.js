@@ -1,23 +1,25 @@
 import React, { Component } from 'react';
+import { v4 } from 'uuid';
 import './App.css';
-import Todos from './components/Todos';
-
+import Header from './components/layouts/Header';
+import AddTodo from './components/todos/AddTodo';
+import Todos from './components/todos/Todos';
 class App extends Component {
 
   state = {
     todos: [
       {
-        id: 1,
+        id: v4(),
         task: 'Takeout the trash',
         completed: true
       },
       {
-        id: 2,
+        id: v4(),
         task: 'Clean the fridge',
         completed: false
       },
       {
-        id: 3,
+        id: v4(),
         task: 'Wipe the counters',
         completed: false
       }
@@ -39,20 +41,28 @@ class App extends Component {
 
   deleteTask = (id) => {
     this.setState({
-      todos: this.state.todos.map(
-        todo => {
-          if (todo.id === id) {
-             
-          }
-        }
-      )
-    })
+      todos: [...this.state.todos.filter(todo => todo.id !== id)]
+    });
+  };
+
+  addTodo = (task) => {
+    this.setState({
+      todos: [...this.state.todos, {
+        id: v4(),
+        task,
+        completed: false
+      }]
+    });
   };
 
   render() {
     return (
-      <div className="App">
-        <Todos todos={ this.state.todos } markComplete={ this.markComplete } />
+      <div>
+        <div className="container">
+          <Header />
+          <AddTodo addTodo={ this.addTodo } />
+          <Todos todos={ this.state.todos } markComplete={ this.markComplete } deleteTask={ this.deleteTask } />
+        </div>
       </div>
     );
   };
