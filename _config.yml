@@ -1,0 +1,9 @@
+# Site settings
+title: React Crash Course
+author:
+  name: Denise Pereira
+  email: decpereira@outlook.com
+description: "React Tutorial"
+
+# Build settings
+remote_theme: jekyll/minima
