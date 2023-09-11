@@ -1,36 +1,33 @@
 import React, { Component } from 'react';
-import { v4 } from 'uuid';
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+// @ts-ignore
 import './App.css';
 import Header from './components/layouts/Header';
+// @ts-ignore
+import axios from 'axios';
+import About from './components/pages/About';
 import AddTodo from './components/todos/AddTodo';
 import Todos from './components/todos/Todos';
 class App extends Component {
 
   state = {
-    todos: [
-      {
-        id: v4(),
-        task: 'Takeout the trash',
-        completed: true
-      },
-      {
-        id: v4(),
-        task: 'Clean the fridge',
-        completed: false
-      },
-      {
-        id: v4(),
-        task: 'Wipe the counters',
-        completed: false
-      }
-    ]
+    todos: []
   };
+
+  componentDidMount() {
+    axios.get('https://jsonplaceholder.typicode.com/todos?_limit=30')
+      .then((resp) => {
+        this.setState(({ todos: resp.data }));
+      });
+  }
 
   // toggle complete
   markComplete = (id) => {
     this.setState({
       todos: this.state.todos.map(todo => {
+        // @ts-ignore
         if (todo.id === id) {
+          // @ts-ignore
           todo.completed = !todo.completed;
         }
 
@@ -40,30 +37,43 @@ class App extends Component {
   };
 
   deleteTask = (id) => {
-    this.setState({
-      todos: [...this.state.todos.filter(todo => todo.id !== id)]
-    });
+    axios.delete(`https://jsonplaceholder.typicode.com/todos/${id}`)
+      // @ts-ignore
+      .then(resp => this.setState({
+        // @ts-ignore
+        todos: [...this.state.todos.filter(todo => todo.id !== id)]
+      }));
+
   };
 
-  addTodo = (task) => {
-    this.setState({
-      todos: [...this.state.todos, {
-        id: v4(),
-        task,
-        completed: false
-      }]
-    });
+  addTodo = (title) => {
+    axios.post('https://jsonplaceholder.typicode.com/todos', {
+      title: title,
+      completed: false
+    }).then(resp => this.setState({
+      todos: [...this.state.todos, resp.data]
+    }));
   };
 
   render() {
     return (
-      <div>
-        <div className="container">
-          <Header />
-          <AddTodo addTodo={ this.addTodo } />
-          <Todos todos={ this.state.todos } markComplete={ this.markComplete } deleteTask={ this.deleteTask } />
+      <Router>
+        <div>
+          <div className="container">
+            <Header />
+            <Routes>
+              <Route path="/" Component={ _props => (
+                <React.Fragment>
+                  <AddTodo addTodo={ this.addTodo } />
+                  <Todos todos={ this.state.todos } markComplete={ this.markComplete } deleteTask={ this.deleteTask } />
+                </React.Fragment>
+              ) } />
+              <Route path='/about' Component={ About } />
+            </Routes>
+
+          </div>
         </div>
-      </div>
+      </Router>
     );
   };
 }
