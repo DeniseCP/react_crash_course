@@ -24,11 +24,7 @@ You may also see any lint errors in the console.
 
 ## Github Pages
 
-<<<<<<< HEAD
-This application hsa been deployed to Git Pages and it's available at [denisecp.github.io/react_crash_course](https://denisecp.githut.io/react_crash_course)
-=======
 This application hsa been deployed to Git Pages and it's available at [denisecp.github.io/react_crash_course](https://denisecp.github.io/react_crash_course)
->>>>>>> 70a95f6 (Add information to readme.md)
 
 ## Contributing
 
